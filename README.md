@@ -93,6 +93,26 @@ graph TD
     - **Booking Mode (Sari)**: `http://localhost:3000`
     - **Security Kiosk (Reza)**: `http://localhost:3000/kiosk` (Requires Camera Access)
 
+## 📂 Template & Setup Guides
+
+Included in this repository are templates to help you replicate the logic rapidly.
+
+### 1. n8n Workflows (`/N8N Json Template`)
+7 pre-configured workflows for the "Agentic Backend" logic.
+- **Import**: Open n8n -> Workflows -> Import -> Upload files from `N8N Json Template`.
+- **Setup**:
+    - Connect your **Google Calendar** and **Google Sheets** credentials in n8n nodes.
+    - **Note**: These are "Webhook-based" workflows. Copy the *Test URL* or *Production URL* of each webhook.
+    - Update the **Workflow IDs** in `backend/app/mcp_bridge.py` if necessary (though the bridge triggers them effectively).
+
+### 2. CRM Database (`/Spreadsheet Template`)
+A structured Excel file (`LOG - CALIANA VMS...xlsx`) to use as your database.
+- **Usage**:
+    - Upload this file to **Google Drive**.
+    - Open as **Google Sheets**.
+    - Connect this sheet to the "Client Lookup", "New Client CRM", etc., nodes in n8n.
+    - **Essential Columns**: `Name`, `Email`, `Phone`, `BookingTime`, `Status`.
+
 ## 🛡️ Security Protocol (Reza Logic)
 The Security Persona enforces strict rules:
 1.  **Unknown Guest**: Deny Access -> Redirect to Receptionist.

@@ -1,0 +1,213 @@
+{
+  "name": "[WEBHOOK] Tool - Cancel Appointment",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "236a56120186067d30d83fdb5ea54fccb0dc8e98072429f679cc35ccc1804208@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Receptionist"
+        },
+        "eventId": "={{ $json.body.event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "4a83a8d7-9773-4133-b8f0-aa4377268a0a",
+      "name": "Delete an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "PBIFzTe9LgnY5Idr",
+          "name": "Nugi - Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1152454574,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=1152454574"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        0
+      ],
+      "id": "4dd70b6c-57fc-4380-bcc4-fedcb3f700d0",
+      "name": "Delete rows or columns from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1152454574,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=1152454574"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "event_id",
+              "lookupValue": "={{ $('Webhook').item.json.body.event_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "e554d7ad-dda6-47e2-b258-301c3495eee4",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ecad27aa-6977-41a6-a4b4-850ae7b21e90",
+              "name": "Result",
+              "value": "Jadwal berhasil dibatalkan dan dihapus dari sistem.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "fd09eb01-c45b-457e-ad00-407a579751f4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "path": "195eb15f-5eb9-4d19-bef0-4396257774c5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        0
+      ],
+      "id": "ac5f7473-8087-41ee-8d43-7b16d0a871a9",
+      "name": "Webhook",
+      "webhookId": "195eb15f-5eb9-4d19-bef0-4396257774c5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Delete rows or columns from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete rows or columns from sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "3f2181b5-3ee5-4e02-bf97-af6a642ff9c0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af17f6c1ce68b709e8fadd68dc2e4577d899538782b91e98e5717f631d46d39"
+  },
+  "id": "M7g6pQuSleRyPGcm",
+  "tags": [
+    {
+      "updatedAt": "2025-12-26T07:27:35.254Z",
+      "createdAt": "2025-12-26T07:27:35.254Z",
+      "id": "5HB1FvAeKH9FLc5N",
+      "name": "AI Receptionist"
+    }
+  ]
+}

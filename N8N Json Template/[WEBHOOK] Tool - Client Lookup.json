@@ -1,0 +1,334 @@
+{
+  "name": "[WEBHOOK] Tool - Client Lookup",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Clients",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json.body.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f420475c-66af-446d-af41-f20d1b115fdf",
+      "name": "Client Lookup",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7b8b132e-6452-4936-96ab-521c601f33f1",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "c49cc4db-0d8d-4536-af04-a96aa61cbd5f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb7803a6-2df7-468b-bd0b-6239003b36f4",
+              "name": "result",
+              "value": "User tidak ditemukan. Tolong minta email, nama lengkap dan nomor telepon mereka untuk mendaftar.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        160
+      ],
+      "id": "fa5ca14a-74bc-4309-a624-ea591e592990",
+      "name": "New Client Message"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1152454574,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=1152454574"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $('Webhook').item.json.body.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "fe69e0de-5743-4ce5-84a5-c946a0c738de",
+      "name": "Get Info",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7b8b132e-6452-4936-96ab-521c601f33f1",
+              "leftValue": "={{ $json.event_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        -96
+      ],
+      "id": "dd2a214c-b6dc-47e3-96af-ff6caaec46e6",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb7803a6-2df7-468b-bd0b-6239003b36f4",
+              "name": "result",
+              "value": "=User ditemukan atas nama {{ $json.name }}, tapi belum ada jadwal appointment. tapi coba pastikan lagi menggunakan `lookup_appointment` apakah member sudah melakukan reservasi, langsung lakukan!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        16
+      ],
+      "id": "be9733f4-a46d-4f7b-ac95-aeaa690b4b98",
+      "name": "Belum Punya Jadwal"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb7803a6-2df7-468b-bd0b-6239003b36f4",
+              "name": "result",
+              "value": "=User ditemukan atas nama {{ $json.name }}. Mereka sudah punya jadwal pada {{ $json.start_time }} - {{ $json.end_time }}.\n\nevent_id: {{ $json.event_id }}\nemail: {{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -176
+      ],
+      "id": "c40bd215-ac78-45c3-bdea-c89edceef19e",
+      "name": "Sudah Punya Jadwal"
+    },
+    {
+      "parameters": {
+        "path": "ba0a07f4-e7fb-45c3-888a-494d4feaad87",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3f97b3a7-3068-4813-b60d-5f139ecbf5c2",
+      "name": "Webhook",
+      "webhookId": "ba0a07f4-e7fb-45c3-888a-494d4feaad87"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Client Lookup": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get Info",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "New Client Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Info": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Sudah Punya Jadwal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Belum Punya Jadwal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Client Lookup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "4c340a80-c3cf-4c29-9613-115df6c60a67",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af17f6c1ce68b709e8fadd68dc2e4577d899538782b91e98e5717f631d46d39"
+  },
+  "id": "PiHySWYpcDwjUq87",
+  "tags": [
+    {
+      "updatedAt": "2025-12-26T07:27:35.254Z",
+      "createdAt": "2025-12-26T07:27:35.254Z",
+      "id": "5HB1FvAeKH9FLc5N",
+      "name": "AI Receptionist"
+    }
+  ]
+}

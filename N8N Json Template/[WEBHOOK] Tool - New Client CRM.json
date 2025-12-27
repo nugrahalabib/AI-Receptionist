@@ -1,0 +1,163 @@
+{
+  "name": "[WEBHOOK] Tool - New Client CRM",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Clients",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.body.email }}",
+            "name": "={{ $json.body.name }}",
+            "phone": "={{ $json.body.phone }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d186cc12-db93-47b8-90e6-2ca544b73c22",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b56376a2-0ae6-492c-aa50-6c4487616621",
+              "name": "result",
+              "value": "=Akun baru berhasil dibuat untuk {{ $('Webhook').item.json.body.name }}.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b637ea31-8fbc-4263-ad7d-7ac8b846adf4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "path": "8e891a0d-8134-4a32-8df5-5d7dfe6220a1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "00bec6d0-8c77-41ba-94a2-38ca7c4c0c30",
+      "name": "Webhook",
+      "webhookId": "8e891a0d-8134-4a32-8df5-5d7dfe6220a1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "53e47a1c-18b5-4b3f-b712-c48d6262a573",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af17f6c1ce68b709e8fadd68dc2e4577d899538782b91e98e5717f631d46d39"
+  },
+  "id": "KymrzNh4Jth9v16l",
+  "tags": [
+    {
+      "updatedAt": "2025-12-26T07:27:35.254Z",
+      "createdAt": "2025-12-26T07:27:35.254Z",
+      "id": "5HB1FvAeKH9FLc5N",
+      "name": "AI Receptionist"
+    }
+  ]
+}

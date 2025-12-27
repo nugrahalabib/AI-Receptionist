@@ -1,0 +1,236 @@
+{
+  "name": "[WEBHOOK] Tool - Book Event",
+  "nodes": [
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "236a56120186067d30d83fdb5ea54fccb0dc8e98072429f679cc35ccc1804208@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Receptionist"
+        },
+        "start": "={{ $json.body.startTime }}",
+        "end": "={{ $json.body.endTime }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $json.body.email }}"
+          ],
+          "summary": "=Appointment with {{ $json.body.name }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "bb971b52-0c41-4309-a7a6-3c3bd0ddffe3",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "PBIFzTe9LgnY5Idr",
+          "name": "Nugi - Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1152454574,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=1152454574"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "event_id": "={{ $json.id }}",
+            "email": "={{ $('Webhook').item.json.body.email }}",
+            "start_time": "={{ $json.start.dateTime }}",
+            "end_time": "={{ $json.end.dateTime }}",
+            "summary": "={{ $json.summary }}",
+            "status": "={{ $json.status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "event_id",
+              "displayName": "event_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "start_time",
+              "displayName": "start_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_time",
+              "displayName": "end_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0bb83851-504a-415d-9462-f32f1b0150b3",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2942561d-fac6-4083-9f5b-cfead8e22b8a",
+              "name": "result",
+              "value": "=Booking berhasil untuk {{ $('Webhook').item.json.name }}. Undangan sudah dikirim ke email.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "ac79cf72-761a-4a74-abb3-03b34808be39",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "path": "f9ff5937-dffa-4bf0-a6ed-7e5dc8c30797",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b67a9cec-c7fb-48c1-8748-1b687e3d8564",
+      "name": "Webhook",
+      "webhookId": "f9ff5937-dffa-4bf0-a6ed-7e5dc8c30797"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "33c1dbe5-f5b0-4050-bad4-e78c9b10de2a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af17f6c1ce68b709e8fadd68dc2e4577d899538782b91e98e5717f631d46d39"
+  },
+  "id": "Ao6wuSMbydtD76ai",
+  "tags": [
+    {
+      "updatedAt": "2025-12-26T07:27:35.254Z",
+      "createdAt": "2025-12-26T07:27:35.254Z",
+      "id": "5HB1FvAeKH9FLc5N",
+      "name": "AI Receptionist"
+    }
+  ]
+}

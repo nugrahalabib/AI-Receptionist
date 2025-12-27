@@ -1,0 +1,248 @@
+{
+  "name": "[WEBHOOK] Tool - Reschedule Appointment",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "236a56120186067d30d83fdb5ea54fccb0dc8e98072429f679cc35ccc1804208@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Receptionist"
+        },
+        "eventId": "={{ $json.body.event_id }}",
+        "updateFields": {
+          "end": "={{ $json.body.newEndTime }}",
+          "start": "={{ $json.body.newStartTime }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "66332fb9-7d76-4acd-b23d-3366e2b2d5e9",
+      "name": "Update an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "PBIFzTe9LgnY5Idr",
+          "name": "Nugi - Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs",
+          "mode": "list",
+          "cachedResultName": "LOG - CALIANA VMS - AI Receptionis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1152454574,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NH6IcWf8y9AWJobsDAwIEd3bfc2gQDAOBEj2vni8CDs/edit#gid=1152454574"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "event_id": "={{ $json.id }}",
+            "start_time": "={{ $json.start.dateTime }}",
+            "end_time": "={{ $json.start.dateTime }}"
+          },
+          "matchingColumns": [
+            "event_id"
+          ],
+          "schema": [
+            {
+              "id": "event_id",
+              "displayName": "event_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "start_time",
+              "displayName": "start_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_time",
+              "displayName": "end_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "4676617d-12d1-4aba-8748-92ed6b6ca70a",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MKbz7mvZt2Tl0KyU",
+          "name": "Nugi - Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a3ca5c29-c3e2-417a-993d-dd672018da02",
+              "name": "result",
+              "value": "=Reschedule berhasil. Jadwal baru sudah dikirim ke kalender dan email.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        0
+      ],
+      "id": "c28d392c-567d-42f4-be01-80e0e292c6e8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "path": "268f2606-cd99-40e0-9d92-ae53f5fb4c14",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        0
+      ],
+      "id": "5cad22a9-adb9-47fe-8b9a-17e4ef124afe",
+      "name": "Webhook",
+      "webhookId": "268f2606-cd99-40e0-9d92-ae53f5fb4c14"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Update an event": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Update an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "d6055f64-3cf1-4b89-9fcc-3b08ae685d1f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af17f6c1ce68b709e8fadd68dc2e4577d899538782b91e98e5717f631d46d39"
+  },
+  "id": "JOIq7XOABi7w6Qlk",
+  "tags": [
+    {
+      "updatedAt": "2025-12-26T07:27:35.254Z",
+      "createdAt": "2025-12-26T07:27:35.254Z",
+      "id": "5HB1FvAeKH9FLc5N",
+      "name": "AI Receptionist"
+    }
+  ]
+}
