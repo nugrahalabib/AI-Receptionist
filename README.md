@@ -33,12 +33,12 @@ Seamlessly connects to business logic via **n8n**:
 
 ```mermaid
 graph TD
-    User[User/Guest] -->|Audio/Video| Frontend[Next.js Kiosk UI]
-    Frontend -->|WebSocket (Audio+Images)| Backend[FastAPI Python]
-    Backend -->|Multimodal Live API| Gemini[Google Gemini 2.0]
-    Backend -->|MCP Protocol| n8n[n8n Workflow Engine]
-    n8n -->|API| GCal[Google Calendar]
-    n8n -->|API| GSheets[Google Sheets]
+    User["User/Guest"] -->|"Audio/Video"| Frontend["Next.js Kiosk UI"]
+    Frontend -->|"WebSocket (Audio + Images)"| Backend["FastAPI Python"]
+    Backend -->|"Multimodal Live API"| Gemini["Google Gemini 2.0"]
+    Backend -->|"MCP Protocol"| n8n["n8n Workflow Engine"]
+    n8n -->|API| GCal["Google Calendar"]
+    n8n -->|API| GSheets["Google Sheets"]
 ```
 
 ## 🚀 Getting Started
