@@ -243,7 +243,7 @@ export default function KioskScreen() {
                                 ACCESS GRANTED
                             </h2>
                             <p className="text-xl text-green-200 font-mono">
-                                WELCOME TO CALIANA
+                                WELCOME TO NEXUS
                             </p>
                         </div>
                     </motion.div>

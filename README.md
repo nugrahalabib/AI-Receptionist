@@ -1,8 +1,8 @@
-# Caliana - AI Receptionist & Security System 🤖🛡️
+# Nexus - AI Receptionist & Security System 🤖🛡️
 
-**Caliana** is a next-generation "Hybrid AI Receptionist" designed for hospitality and high-security environments. It is not just a chatbot; it's a **Multimodal Agent** that can hear, speak, and *see*.
+**Nexus** is a next-generation "Hybrid AI Receptionist" designed for hospitality and high-security environments. It is not just a chatbot; it's a **Multimodal Agent** that can hear, speak, and *see*.
 
-![Caliana Banner](https://img.shields.io/badge/Status-Active-success) ![Tech](https://img.shields.io/badge/Gemini-Multimodal_Live-blue) ![Stack](https://img.shields.io/badge/Stack-Next.js_FastAPI-black)
+![Nexus Banner](https://img.shields.io/badge/Status-Active-success) ![Tech](https://img.shields.io/badge/Gemini-Multimodal_Live-blue) ![Stack](https://img.shields.io/badge/Stack-Next.js_FastAPI-black)
 
 ## 🌟 Key Features
 
